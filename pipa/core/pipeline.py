@@ -17,16 +17,16 @@ class PipelineItem(object):
         except IndexError as e:
             # no callable passed as parameter:
             # this is a subclassed PipelineItem, with a "generator" method overwritten
-            self.name = self.__class__.__name__
+            self.name = kwargs.pop('_item_name', self.__class__.__name__ )
         self.callable_args = args
         self.callable_kwargs = kwargs
         self.pipeline_instance = None
-        self.tuple_name='UNNAMED_TUPLE'
+        self.tuple_name = 'UNNAMED_TUPLE'
         self.tuple_fields = ''
 
         self.logger = logging.getLogger(".".join([log.logger_name, self.name]))
 
-    def make_item(self, *args, **kwargs):
+    def make_tuple(self, *args, **kwargs):
         nm = namedtuple(self.tuple_name, self.tuple_fields)(**kwargs)
         return nm
 
@@ -49,7 +49,7 @@ class Pipeline(object):
         self.item_list = []
         self.logger = logging.getLogger(".".join([log.logger_name, self.__class__.__name__]))
 
-    def add_item(self, item_to_add, **kwargs):
+    def append(self, item_to_add, **kwargs):
         if type(item_to_add) != FunctionType and issubclass(item_to_add,PipelineItem):
             i = item_to_add(**kwargs)
             i.pipeline_instance=self
@@ -60,6 +60,7 @@ class Pipeline(object):
             p_item.pipeline_instance=self
             self.item_list.append(p_item)
 
+
     def configure_item(self, item_name, **kwargs):
         for item in self.item_list:
             if item_name == item.name:
@@ -67,7 +68,6 @@ class Pipeline(object):
                     item.callable_kwargs.update(kwargs)
 
     def execute(self, *args, **kwargs):
-
         chain = None
         new_kwargs = {}
         arguments = [arg for arg in args]

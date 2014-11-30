@@ -16,5 +16,5 @@ class FindInPath(PipelineItem):
             sftp_client = conn.connection.open_sftp()
             file_list = sftp_client.listdir(path=path)
             for name in fnmatch.filter(file_list, filemask):
-                yield self.make_item(connection=conn.connection, filename=os.path.join(path,name))
+                yield self.make_tuple(connection=conn.connection, filename=os.path.join(path,name))
             sftp_client.close()

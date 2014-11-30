@@ -1,0 +1,206 @@
+
+[ug.checkmsisdn]
+OK;UGManagerService;3473508;Operation completed successfully
+KO;UGManagerService;3475508;Generic Error on System
+KO;UGManagerService;3475608;Generic Error of WebService layer
+KO;UGManagerService;3475726;MSISDN not valid
+KO;UGManagerService;3475728;Not valid Input
+KO;JPIG;65792;Errore generico db
+KO;JPIG;65793;ws non presente su db o non configurato correttamente
+KO;JPIG;65794;ws-security: username non valida
+KO;JPIG;65795;ws-security: password non valida
+KO;JPIG;65796;ws-security: utente disabilitato
+KO;JPIG;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+KO;JPIG;65589;risposta del ws di backend UserGroupManager non formattata correttamente
+KO;JPIG;65556;ws di backend UserGroupManager non disponibile
+KO;JPIG;131071;Errore generico
+
+[ba.getbarringList]
+OK;BarringService;3276800;Operation completed successfully
+OK;BarringService;3276805;APPLICATIVE ERROR
+KO;BarringService;3276806;MSISDN contains not numeric values
+KO;BarringService;3276806;MSISDN in a wrong format
+KO;BarringService;3276806;MSISDN has wrong length
+KO;BarringService;3276953;SYSTEM ERROR
+JPIG;KO;65792;Errore generico db
+JPIG;KO;65793;ws non presente su db o non configurato correttamente
+JPIG;KO;65794;ws-security: username non valido
+JPIG;KO;65795;ws-security: password non valida
+JPIG;KO;65796;ws-security: utente disabilitato
+JPIG;KO;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+JPIG;KO;65586;risposta del ws di backend Barring non formattata correttamente
+JPIG;KO;65545;ws di backend Barring non disponibile
+JPIG;KO;131071;Errore generico
+
+[ba.InactivateBarring]
+OK;BarringService;3276800;Operation completed successfully
+OK;BarringService;3276804;Barring already inactive on msisdn
+KO;BarringService;3276805;APPLICATIVE ERROR
+KO;BarringService;3276806;MSISDN contains not numeric values
+KO;BarringService;3276806;MSISDN in a wrong format
+KO;BarringService;3276806;MSISDN has wrong length
+KO;BarringService;3276953;SYSTEM ERROR
+KO;JPIG;65792;Errore generico db
+KO;JPIG;65793;ws non presente su db o non configurato correttamente
+KO;JPIG;65794;ws-security: username non valida
+KO;JPIG;65795;ws-security: password non valida
+KO;JPIG;65796;ws-security: utente disabilitato
+KO;JPIG;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+KO;JPIG;65586;risposta del ws di backend Barring non formattata correttamente
+KO;JPIG;65545;ws di backend Barring non disponibile
+KO;JPIG;131071;Errore generico
+
+[ma.createPendingsubscription]
+KO;MerchantAggregatorService;3147828;Generic Error on System
+KO;MerchantAggregatorService;3147829;Error from Delegator
+KO;MerchantAggregatorService;3147830;Error on lookup
+KO;MerchantAggregatorService;3147928;Generic Error of WebService layer
+KO;MerchantAggregatorService;3148028;Generic Error on Business layer
+KO;MerchantAggregatorService;3148029;Offer not found
+KO;MerchantAggregatorService;3148046;MSISDN not valid
+KO;MerchantAggregatorService;3148048;Not valid Input
+KO;MerchantAggregatorService;3148128;Generic Error on DAO layer
+KO;MerchantAggregatorService;3148172;Errore DAO layer
+KO;MerchantAggregatorService;3148728;Contatore della durata out of bound inatteso
+KO;MerchantAggregatorService;3148729;Errore generico
+KO;MerchantAggregatorService;65792;Errore generico db
+KO;MerchantAggregatorService;65793;ws non presente su db o non configurato correttamente
+KO;MerchantAggregatorService;65794;ws-security: username non valida
+KO;MerchantAggregatorService;65795;ws-security: password non valida
+KO;MerchantAggregatorService;65796;ws-security: utente disabilitato
+KO;MerchantAggregatorService;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+KO;MerchantAggregatorService;65569;risposta del ws di backend Merchant non formattata correttamente
+KO;MerchantAggregatorService;65553;ws di backend Merchant non disponibile
+KO;MerchantAggregatorService;131071;Errore generico
+
+#ma.activatePendingSubscription
+OK;MerchantAggregatorService;3145828;Operazione conclusa correttamente
+OK;MerchantAggregatorService;3147830;Errore durante il lookup
+KO;MerchantAggregatorService;3147829;Error from Delegator
+KO;MerchantAggregatorService;3148154;Pagamento fallito e sottoscrizione cancellata
+KO;MerchantAggregatorService;3148034;Errore durante la chiusura della transazione
+KO;MerchantAggregatorService;3148128;Errore generico DAO layer
+KO;MerchantAggregatorService;3148166;Subscription busy
+KO;MerchantAggregatorService;3148046;MSISDN non valido
+KO;MerchantAggregatorService;3148048;Input non validi
+KO;MerchantAggregatorService;3148029;Offer not found
+KO;MerchantAggregatorService;3148135;SUBSCRIPTION NOT FOUND
+KO;MerchantAggregatorService;3148137;Subscription is pending closed
+KO;MerchantAggregatorService;3148138;Invalid subscription status
+KO;MerchantAggregatorService;3148139;Number of pending subscription tasks submitted excedeed
+KO;MerchantAggregatorService;3148140;That kind of service dont allow to duplicate user product subscription
+KO;MerchantAggregatorService;3148142;Product is not exposed for pending confirmation
+KO;MerchantAggregatorService;3148141;External activation channel is blocked
+KO;MerchantAggregatorService;3148144;Product pending threshold not match with request values
+KO;MerchantAggregatorService;3148145;TimeBoundEvent not valid
+KO;MerchantAggregatorService;3147831;Wrong product configuration
+KO;MerchantAggregatorService;3148166;Subscription busy
+KO;MerchantAggregatorService;3148028;Errore generico Business layer
+KO;MerchantAggregatorService;3148164;No promo found
+KO;MerchantAggregatorService;3148158;Promo already used by this user
+KO;MerchantAggregatorService;3147928;Errore generico WebService layer
+KO;MerchantAggregatorService;3148172;Errore DAO layer
+KO;JPIG;65792;Errore generico db
+KO;JPIG;65793;ws non presente su db o non configurato correttamente
+KO;JPIG;65794;ws-security: username non valido
+KO;JPIG;65795;ws-security: password non valido
+KO;JPIG;65796;ws-security: utente disabilitato
+KO;JPIG;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+KO;JPIG;65569;Risposta del ws di backend Merchant non formattata correttamente
+KO;JPIG;65553;ws di backend Merchant non disponibile
+KO;JPIG;131071;Errore generico
+
+[ma.getSubscriptionList]
+OK;MerchantAggregatorService;3145828;Operazione conclusa correttamente
+KO;MerchantAggregatorService;3147830;Errore durante il lookup
+KO;MerchantAggregatorService;3147829;Error from Delegator
+KO;MerchantAggregatorService;3148154;Pagamento fallito e sottoscrizione cancellata
+KO;MerchantAggregatorService;3148034;Errore durante la chiusura della transazione
+KO;MerchantAggregatorService;3148128;Errore generico DAO layer
+KO;MerchantAggregatorService;3148166;Subscription busy
+KO;MerchantAggregatorService;3148046;MSISDN non valido
+KO;MerchantAggregatorService;3148048;Input non validi
+KO;MerchantAggregatorService;3148029;Offer not found
+KO;MerchantAggregatorService;3148135;SUBSCRIPTION NOT FOUND
+KO;MerchantAggregatorService;3148141;External activation channel is blocked
+KO;MerchantAggregatorService;3147831;Wrong product configuration
+KO;MerchantAggregatorService;3148028;Errore generico Business layer
+KO;MerchantAggregatorService;3148158;Promo already used by this user
+KO;MerchantAggregatorService;3147928;Errore generico WebService layer
+KO;MerchantAggregatorService;3148172;Errore DAO layer
+KO;MerchantAggregatorService;3148060;Invalid date range
+KO;MerchantAggregatorService;3148130;Merchant tried to cancel or perform a payment on a subscription already closed.
+KO;MerchantAggregatorService;3148136;Merchant is not authorized to use that SID
+KO;JPIG;65792;Errore generico db
+KO;JPIG;65793;ws non presente su db o non configurato correttamente
+KO;JPIG;65794;ws-security: username non valido
+KO;JPIG;65795;ws-security: password non valido
+KO;JPIG;65796;ws-security: utente disabilitato
+KO;JPIG;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+KO;JPIG;65569;Risposta del ws di backend Merchant non formattata correttamente
+KO;JPIG;65553;ws di backend Merchant non disponibile
+KO;JPIG;131071;Errore generico
+
+[ma.Burnticket]
+OK;MerchantAggregatorService;3145828;Operazione conclusa correttamente
+OK;MerchantAggregatorService;3148162;cannot find ticket for promo
+OK;MerchantAggregatorService;3148164;no promo found
+OK;MerchantAggregatorService;3147830;Errore durante il lookup
+OK;MerchantAggregatorService;3147829;Error from Delegator
+OK;MerchantAggregatorService;3148154;Pagamento fallito e sottoscrizione cancellata
+OK;MerchantAggregatorService;3148034;Errore durante la chiusura della transazione
+OK;MerchantAggregatorService;3148029;Offer not found
+OK;MerchantAggregatorService;MerchantAggregatorService;3148172;Errore DAO layer
+OK;JPUG;65792;Errore generico db
+OK;JPUG;65793;ws non presente su db o non configurato correttamente
+OK;JPUG;65794;ws-security: username non valido
+OK;JPUG;65795;ws-security: password non valido
+OK;JPUG;65796;ws-security: utente disabilitato
+OK;JPUG;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+OK;JPUG;65569;Risposta del ws di backend Merchant non formattata correttamente
+OK;JPUG;65553;ws di backend Merchant non disponibile
+OK;JPIG;131071;Errore generico
+
+[ma.checkTicket]
+OK;MerchantAggregatorService;3145828;Operazione conclusa correttamente
+KO;MerchantAggregatorService;3148029;wrong product configuration
+KO;MerchantAggregatorService;3148158;promo already used by this user
+KO;MerchantAggregatorService;3148159;wrong promo check type
+KO;MerchantAggregatorService;3148162;cannot find ticket for promo
+KO;MerchantAggregatorService;3148164;no promo found
+KO;MerchantAggregatorService;3148179;ticket already fired
+KO;MerchantAggregatorService;3148180;ticket already booked
+KO;MerchantAggregatorService;3147830;Errore durante il lookup
+KO;MerchantAggregatorService;3147829;Error from Delegator
+KO;MerchantAggregatorService;3148154;Pagamento fallito e sottoscrizione cancellata
+KO;MerchantAggregatorService;3148034;Errore durante la chiusura della transazione
+KO;MerchantAggregatorService;3148029;Offer not found
+KO;JPIG;65792;Errore generico db
+KO;JPIG;65793;ws non presente su db o non configurato correttamente
+KO;JPIG;65794;ws-security: username non valido
+KO;JPIG;65795;ws-security: password non valido
+KO;JPIG;65796;ws-security: utente disabilitato
+KO;JPIG;65797;Utente non abilitato all'esecuzione del metodo o metodo non attivo
+KO;JPIG;65569;Risposta del ws di backend Merchant non formattata correttamente
+KO;JPIG;65553;ws di backend Merchant non disponibile
+KO;JPIG;131071;Errore generico
+
+[vu.getSubStatus]
+KO;VUSubcriptionService;3342350;System Error (EAIWS)
+KO;VUSubcriptionService;3342351;Exception (EAIWS)
+KO;VUSubcriptionService;3342435;System error message
+KO;VUSubcriptionService;3342434;msisdn cannot be null
+KO;VUSubcriptionService;3342433;msisdn not numeric
+KO;VUSubcriptionService;3342432;wrong msisdn length
+KO;VUSubcriptionService;3342431;wrong format for msisdn
+KO;VUSubcriptionService;3342430;Stored Procedure Exception
+KO;JPIG;65792;Generic Error on DB
+KO;JPIG;65793;ws not present on db or not properly configured
+KO;JPIG;65794;ws-security: not valid username
+KO;JPIG;65795;ws-security: not valid password
+KO;JPIG;65796;ws-security: disabled user
+KO;JPIG;65797;User not authorized to the method or not active method
+KO;JPIG;65544;VUSubscription WS not available (SocketTimeoutException o ConnectionRefused)
+KO;JPIG;65555;Backend WS ENCRYPTION  not available(SocketTimeoutException o ConnectionRefused)
+KO;JPIG;131071;Generic Error
+

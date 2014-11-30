@@ -41,4 +41,4 @@ class ReadFromFile(PipelineItem):
                 if line_tell == next_line_tell:
                     break
                 line_num += 1
-                yield self.make_item( line=line, tell=line_tell, line_num=line_num, filename=file_tuple.path )
+                yield self.make_tuple( line=line, tell=line_tell, line_num=line_num, filename=file_tuple.path )

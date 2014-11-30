@@ -13,10 +13,14 @@ class OpenFiles(PipelineItem):
         self.tuple_name = 'open_remote_files'
         self.tuple_fields = 'connection, path, file_obj'
 
-    def generator(self, paramiko_conns):
+    def generator(self, paramiko_conns, file_to_open=''):
         for conn in paramiko_conns:
             sftp_client = conn.connection.open_sftp()
-            file_obj = sftp_client.file(conn.filename,'r')
-            yield self.make_item(connection=conn.connection, file_obj=file_obj, path=conn.filename)
-            file_obj.close()
+            self.logger.debug("Try to open: %s" % file_to_open)
+            try:
+                file_obj = sftp_client.file(file_to_open,'r')
+                yield self.make_tuple(connection=conn.connection, file_obj=file_obj, path=file_to_open)
+                file_obj.close()
+            except IOError as e:
+                self.logger.debug(e)
             sftp_client.close()

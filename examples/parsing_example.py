@@ -40,24 +40,24 @@ def create_csv(tuples, output_file=''):
                 file.write(";".join([method_name, item.code, item.message, item.from_service, '\n']))
 
 p = Pipeline()
-p.add_item( pipa.system.find_in_path, _item_name='find_files')
-p.add_item( pipa.system.open_files )
-p.add_item( pipa.system.read_from_files  )
-p.add_item( check_useful_lines )
-p.add_item( make_tuple )
+p.append( pipa.system.find_in_path, _item_name='find_files')
+p.append( pipa.system.open_files )
+p.append( pipa.system.read_from_files  )
+p.append( check_useful_lines )
+p.append( make_tuple )
 #p.add_item( PipelineItem(create_csv, item_name='create_csv', output_file='c:\\temp\\result.csv') )
 
 #tuple_list = [item for item in p.execute(root=r'c:\\temp\\lavoro\\jpig_monitor\\',find='error_code.txt')]
 
 p1=Pipeline()
-p1.add_item( pipa.system.find_in_path, _item_name='find_files')
-p1.add_item( pipa.system.open_files )
-p1.add_item( pipa.system.item.ReadFromFile )
-p1.add_item( pipa.util.item.PrintInput )
+p1.append( pipa.system.find_in_path, _item_name='find_files')
+p1.append( pipa.system.open_files )
+p1.append( pipa.system.item.ReadFromFile )
+p1.append( pipa.util.item.PrintInput )
 #p1.execute(root=r'c:\\temp\\lavoro\\jpig_monitor\\',find='error_code.txt')
 
 p2=Pipeline()
-p2.add_item(pipa.system.remote.ParamikoSSHConnection)
-p2.add_item( pipa.util.item.PrintInput )
+p2.append(pipa.system.remote.ParamikoSSHConnection)
+p2.append( pipa.util.item.PrintInput )
 p2.execute(['osx098v.vizzavi.it'])
 

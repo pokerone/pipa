@@ -11,5 +11,6 @@ class ParseUrl(PipelineItem):
 
     def generator(self, address_list):
         for address in address_list:
-            item = urlparse(address)
-            yield item
+            t = urlparse(address)
+            print t
+            yield t

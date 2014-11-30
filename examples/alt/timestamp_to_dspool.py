@@ -54,13 +54,13 @@ def make_items_from_file(input):
     return item
 
 dspool_pipe = pipa.Pipeline()
-dspool_pipe.add_item( pipa.system.find_in_path )
-dspool_pipe.add_item( pipa.system.open_files )
-dspool_pipe.add_item( pipa.util.item.MakeItem, func=make_items_from_file )
-dspool_pipe.add_item( pipa.processing.filters.Select, field_name='file_obj')
-dspool_pipe.add_item( pipa.system.read_from_files )
-dspool_pipe.add_item( make_ts_dspool )
-dspool_pipe.add_item( make_items_from_dspool)
+dspool_pipe.append( pipa.system.find_in_path )
+dspool_pipe.append( pipa.system.open_files )
+dspool_pipe.append( pipa.util.item.MakeItem, func=make_items_from_file )
+dspool_pipe.append( pipa.processing.filters.Select, field_name='file_obj')
+dspool_pipe.append( pipa.system.read_from_files )
+dspool_pipe.append( make_ts_dspool )
+dspool_pipe.append( make_items_from_dspool)
 
 """
 dspool_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )

@@ -19,5 +19,5 @@ class ParamikoSSHConnection(PipelineItem):
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(conn.host, username=conn.user, password=conn.pwd)
-            yield self.make_item(connection=ssh)
+            yield self.make_tuple(connection=ssh)
             ssh.close()

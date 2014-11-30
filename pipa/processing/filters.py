@@ -4,7 +4,6 @@ __author__ = 'andrea'
 from pipa import PipelineItem
 
 class LessThen(PipelineItem):
-
     def __init__(self, *args, **kwargs):
         super(LessThen, self).__init__(*args, **kwargs)
         self.name = 'less_then'
@@ -20,7 +19,6 @@ class LessThen(PipelineItem):
                     print "skipped line"
 
 class GreaterThen(PipelineItem):
-
     def __init__(self, *args, **kwargs):
         super(GreaterThen, self).__init__(*args, **kwargs)
         self.name = 'greater_then'
@@ -51,12 +49,30 @@ class Select(PipelineItem):
 
     def generator(self, tuples, field_name='', func=None):
         for tuple in tuples:
-            #print "sono GreaterThen: ", tuple
             self.logger.debug("select field name %s" % field_name)
             try:
                 value = getattr(tuple, field_name, None)
                 if func:
                     value = func(value)
                 yield value
+            except:
+                print "exception: skipped line"
+
+class Grep(PipelineItem):
+    def __init__(self, *args, **kwargs):
+        super(Grep, self).__init__(*args, **kwargs)
+        self.name = 'grep'
+        self.tuple_name = 'grep'
+
+    def generator(self, tuples, field_name='', value='', options=''):
+        for tuple in tuples:
+            try:
+                field_value = getattr(tuple, field_name, None)
+                if 'v' in options:
+                    if value not in field_value:
+                        yield tuple
+                else:
+                    if value in field_value:
+                        yield tuple
             except:
                 print "exception: skipped line"

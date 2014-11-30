@@ -18,9 +18,9 @@ def make_items_from_file(input):
 
 #--------session
 session_pipe = Pipeline()
-session_pipe.add_item( pipa.system.find_in_path )
-session_pipe.add_item( pipa.system.open_files )
-session_pipe.add_item( pipa.util.item.MakeItem, func=make_items_from_file )
+session_pipe.append( pipa.system.find_in_path )
+session_pipe.append( pipa.system.open_files )
+session_pipe.append( pipa.util.item.MakeItem, func=make_items_from_file )
 
 #--------gcutil
 def make_items_from_gcutil(inputlist):
@@ -47,13 +47,13 @@ def make_items_from_gcutil(inputlist):
             logger.error(input)
 
 gcutil_pipe = Pipeline()
-gcutil_pipe.add_item( pipa.system.item.ReadFromFile )
-gcutil_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )
-gcutil_pipe.add_item( make_items_from_gcutil )
+gcutil_pipe.append( pipa.system.item.ReadFromFile )
+gcutil_pipe.append( pipa.util.item.Memory, fields_names=['line_num'] )
+gcutil_pipe.append( make_items_from_gcutil )
 
 #--------gc
-def make_items_from_gc(input):
-    gc_tuple= collections.namedtuple("GCTuple", "timestamp,S0C,S1C,S0U,S1U,EC,EU,OC,OU,PC,PU,YGC,YGCT,FGC,FGCT,GCT")
+def make_items_from_gc(input, hostname=''):
+    gc_tuple= collections.namedtuple("GCTuple", "timestamp,S0C,S1C,S0U,S1U,EC,EU,OC,OU,PC,PU,YGC,YGCT,FGC,FGCT,GCT,hostname")
     try:
         input = input.line.strip(' \t\n\r')
         if input[0] != 'T' and int(input[0]) < 10:
@@ -73,7 +73,8 @@ def make_items_from_gc(input):
                                  YGCT=int(fields[12].split(".")[0]),
                                  FGC=int(fields[13]),
                                  FGCT=int(fields[14].split(".")[0]),
-                                 GCT=int(fields[15].split(".")[0]))
+                                 GCT=int(fields[15].split(".")[0]),
+                                 hostname=hostname)
             return item
     except ValueError as e:
         logger.error( e )
@@ -81,9 +82,9 @@ def make_items_from_gc(input):
 
 
 gc_pipe = Pipeline()
-gc_pipe.add_item( pipa.system.item.ReadFromFile )
-gc_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )
-gc_pipe.add_item( pipa.util.item.MakeItem, func=make_items_from_gc )
+gc_pipe.append( pipa.system.item.ReadFromFile )
+gc_pipe.append( pipa.util.item.Memory, fields_names=['line_num'] )
+gc_pipe.append( pipa.util.item.MakeItem, func=make_items_from_gc )
 
 
 #--------iostat
@@ -117,9 +118,9 @@ def make_items_from_iostat(input_list):
             yield iostat_tuple(**data)
 
 iostat_pipe = Pipeline()
-iostat_pipe.add_item( pipa.system.item.ReadFromFile, start_from_line=107814 )
-iostat_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )
-iostat_pipe.add_item( make_items_from_iostat )
+iostat_pipe.append( pipa.system.item.ReadFromFile, start_from_line=107814 )
+iostat_pipe.append( pipa.util.item.Memory, fields_names=['line_num'] )
+iostat_pipe.append( make_items_from_iostat )
 
 
 #--------prstat
@@ -161,9 +162,9 @@ def make_items_from_prstat(input_list):
         except IndexError as e:
             print "Exeception: ", e
 prstat_pipe = Pipeline()
-prstat_pipe.add_item( pipa.system.item.ReadFromFile)
-prstat_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )
-prstat_pipe.add_item( make_items_from_prstat )
+prstat_pipe.append( pipa.system.item.ReadFromFile)
+prstat_pipe.append( pipa.util.item.Memory, fields_names=['line_num'] )
+prstat_pipe.append( make_items_from_prstat )
 
 #--------prstat_thread
 def make_items_from_prstat_thread(input_list):
@@ -209,9 +210,9 @@ def make_items_from_prstat_thread(input_list):
             print e
 
 prstat_thread_pipe = Pipeline()
-prstat_thread_pipe.add_item( pipa.system.item.ReadFromFile)
-prstat_thread_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )
-prstat_thread_pipe.add_item( make_items_from_prstat_thread )
+prstat_thread_pipe.append( pipa.system.item.ReadFromFile)
+prstat_thread_pipe.append( pipa.util.item.Memory, fields_names=['line_num'] )
+prstat_thread_pipe.append( make_items_from_prstat_thread )
 
 def print_arg(*args, **kwargs):
     print kwargs
@@ -235,19 +236,25 @@ def make_items_from_dspool(input_list):
         points = {}
         splitted_line = line.split('{')
         points['timestamp'] = arrow.get(splitted_line[0].strip(" \r\t\n"), format("YYYY-MM-DDTHH:mm:ss"))
-        for value in splitted_line[2].strip(" \r\t\n").replace('"', "").replace(' => ', '=').replace("}", "").strip().split(","):
-            k, v = value.split("=")
-            points['trans_' + k.strip()] = int(v)
-        for value in splitted_line[4].strip(" \r\t\n").replace('"', "").replace(' => ', '=').replace("}", "").strip().split(","):
-            k, v = value.split("=")
-            points['vasa_' + k.strip()] = int(v)
-        yield DSPoolTuple(**points)
+        try:
+            for value in splitted_line[2].strip(" \r\t\n").replace('"', "").replace(' => ', '=').replace("}", "").strip().split(","):
+                k, v = value.split("=")
+                points['trans_' + k.strip()] = int(v)
+            for value in splitted_line[4].strip(" \r\t\n").replace('"', "").replace(' => ', '=').replace("}", "").strip().split(","):
+                k, v = value.split("=")
+                points['vasa_' + k.strip()] = int(v)
+            yield DSPoolTuple(**points)
+        except IndexError as e:
+            pipa.logger.error("Error parsing line %s" % line)
+            pipa.logger.error("Exception was: %s", e)
+
+
 
 dspool_pipe = pipa.Pipeline()
-dspool_pipe.add_item( pipa.processing.filters.Select, field_name='file_obj')
-dspool_pipe.add_item( pipa.system.read_from_files )
-dspool_pipe.add_item( make_ts_dspool )
-dspool_pipe.add_item( make_items_from_dspool)
+dspool_pipe.append( pipa.processing.filters.Select, field_name='file_obj')
+dspool_pipe.append( pipa.system.read_from_files )
+dspool_pipe.append( make_ts_dspool )
+dspool_pipe.append( make_items_from_dspool)
 
 #--------session parser
 def make_key_value_from_session(lines):
@@ -282,10 +289,10 @@ def make_key_value_from_session(lines):
             pipa.logger.error("Error parsing line: '%s'. Ignoring" % line.strip(" \t\r\n"))
 
 session_parser_pipe = Pipeline()
-session_parser_pipe.add_item( pipa.system.find_in_path )
-session_parser_pipe.add_item( pipa.system.open_files )
-session_parser_pipe.add_item( pipa.system.read_from_files )
-session_parser_pipe.add_item( make_key_value_from_session )
+session_parser_pipe.append( pipa.system.find_in_path )
+session_parser_pipe.append( pipa.system.open_files )
+session_parser_pipe.append( pipa.system.read_from_files )
+session_parser_pipe.append( make_key_value_from_session )
 
 #--------jvm uptime
 def parse_jvm_uptime(lines):
@@ -297,10 +304,10 @@ def parse_jvm_uptime(lines):
         yield key, value
 
 jvm_uptime_pipe = Pipeline()
-jvm_uptime_pipe.add_item( pipa.system.find_in_path )
-jvm_uptime_pipe.add_item( pipa.system.open_files )
-jvm_uptime_pipe.add_item( pipa.system.read_from_files )
-jvm_uptime_pipe.add_item( parse_jvm_uptime )
+jvm_uptime_pipe.append( pipa.system.find_in_path )
+jvm_uptime_pipe.append( pipa.system.open_files )
+jvm_uptime_pipe.append( pipa.system.read_from_files )
+jvm_uptime_pipe.append( parse_jvm_uptime )
 
 #--------create_db_item
 def create_db_item(input_list, session_dict):
@@ -308,7 +315,10 @@ def create_db_item(input_list, session_dict):
     for input in input_list:
         if input != None:
             data = {}
-            data['name'] = type(input).__name__
+            if not getattr(input, 'hostname', None) == None:
+                data['name'] = input.hostname + '.' + type(input).__name__
+            else:
+                data['name'] = type(input).__name__
             data['points'] = []
             data['columns'] = []
             temp_data = {}
@@ -344,11 +354,8 @@ def create_db_item(input_list, session_dict):
                 if field_name == 'session_id':
                     data['columns'].append(field_name)
                     points.append("_".join([session_dict['session_name'], str(session_dict['start_monitoring_time'].timestamp)]))
-
             data['points'] = [points]
-
             import pprint
             #pprint.pprint(json.dumps([data]))
             #item = db_item(json_data=json.dumps([data]))
             yield json.dumps([data])
-

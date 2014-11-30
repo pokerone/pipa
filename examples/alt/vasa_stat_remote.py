@@ -32,10 +32,10 @@ def make_item_for_paramiko(item):
     return new_item(host=address, user=user, pwd=pwd, key_path=key_path, path=item.path)
 
 remote_pipe = pipa.Pipeline()
-remote_pipe.add_item( pipa.util.item.ParseUrl )
-remote_pipe.add_item( pipa.util.item.Memory, fields_names=['netloc','path'] )
-remote_pipe.add_item( pipa.util.item.MakeItem, func=make_item_for_paramiko )
-remote_pipe.add_item( pipa.system.remote.ParamikoSSHConnection )
+remote_pipe.append( pipa.util.item.ParseUrl )
+remote_pipe.append( pipa.util.item.Memory, fields_names=['netloc','path'] )
+remote_pipe.append( pipa.util.item.MakeItem, func=make_item_for_paramiko )
+remote_pipe.append( pipa.system.remote.ParamikoSSHConnection )
 
 #--------------------------------------------------------------------------------------parse session file
 def make_key_value_from_session(lines):
@@ -68,15 +68,15 @@ def make_key_value_from_session(lines):
             yield key, value
 
 read_pipe=pipa.Pipeline()
-read_pipe.add_item(pipa.system.remote.ReadFromFile)
-read_pipe.add_item( make_key_value_from_session )
+read_pipe.append(pipa.system.remote.ReadFromFile)
+read_pipe.append( make_key_value_from_session )
 
 #--------------------------------------------------------------------------------------parse remote log file
 parse_files_pipe = pipa.Pipeline()
-parse_files_pipe.add_item(pipa.system.remote.FindInPath)
-parse_files_pipe.add_item(pipa.system.remote.OpenFiles)
+parse_files_pipe.append(pipa.system.remote.FindInPath)
+parse_files_pipe.append(pipa.system.remote.OpenFiles)
 
-pipe.gc_pipe.add_item( pipa.processing.filters.GreaterThen, field_name='timestamp', value=0)
+pipe.gc_pipe.append( pipa.processing.filters.GreaterThen, field_name='timestamp', value=0)
 
 
 def main():

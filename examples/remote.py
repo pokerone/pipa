@@ -24,7 +24,7 @@ def make_item_for_paramiko(item):
 
 
 remote_pipe = pipa.Pipeline()
-remote_pipe.add_item( pipa.util.item.ParseUrl )
-remote_pipe.add_item( pipa.util.item.Memory, fields_names=['netloc','path'] )
-remote_pipe.add_item( pipa.util.item.MakeItem, func=make_item_for_paramiko )
-remote_pipe.add_item( pipa.system.remote.ParamikoSSHConnection )
+remote_pipe.append( pipa.util.item.ParseUrl )
+remote_pipe.append( pipa.util.item.Memory, fields_names=['netloc','path'] )
+remote_pipe.append( pipa.util.item.MakeItem, func=make_item_for_paramiko )
+remote_pipe.append( pipa.system.remote.ParamikoSSHConnection )

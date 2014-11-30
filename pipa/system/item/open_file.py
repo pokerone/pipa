@@ -26,5 +26,5 @@ class OpenFile(pipa.PipelineItem):
             else:
                 #logger.debug("open %s" % name)
                 file = open(name)
-            yield self.make_item( file_obj=file )
+            yield self.make_tuple( file_obj=file )
             file.close()

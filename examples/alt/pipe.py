@@ -19,9 +19,9 @@ def make_items_from_file(input):
 
 #--------session
 session_pipe = Pipeline()
-session_pipe.add_item( pipa.system.find_in_path )
-session_pipe.add_item( pipa.system.open_files )
-session_pipe.add_item( pipa.util.item.MakeItem, func=make_items_from_file )
+session_pipe.append( pipa.system.find_in_path )
+session_pipe.append( pipa.system.open_files )
+session_pipe.append( pipa.util.item.MakeItem, func=make_items_from_file )
 
 #--------gcutil
 def make_items_from_gcutil(inputlist):
@@ -48,9 +48,9 @@ def make_items_from_gcutil(inputlist):
             logger.error(input)
 
 gcutil_pipe = Pipeline()
-gcutil_pipe.add_item( pipa.system.item.ReadFromFile )
-gcutil_pipe.add_item( pipa.util.item.Memory, fields_names='line_num' )
-gcutil_pipe.add_item( make_items_from_gcutil )
+gcutil_pipe.append( pipa.system.item.ReadFromFile )
+gcutil_pipe.append( pipa.util.item.Memory, fields_names='line_num' )
+gcutil_pipe.append( make_items_from_gcutil )
 
 #--------gc
 def make_items_from_gc(input):
@@ -82,9 +82,9 @@ def make_items_from_gc(input):
 
 
 gc_pipe = Pipeline()
-gc_pipe.add_item( pipa.system.item.ReadFromFile )
-gc_pipe.add_item( pipa.util.item.Memory, fields_names=['line_num'] )
-gc_pipe.add_item( pipa.util.item.MakeItem, func=make_items_from_gc )
+gc_pipe.append( pipa.system.item.ReadFromFile )
+gc_pipe.append( pipa.util.item.Memory, fields_names=['line_num'] )
+gc_pipe.append( pipa.util.item.MakeItem, func=make_items_from_gc )
 
 
 #--------iostat
@@ -118,9 +118,9 @@ def make_items_from_iostat(input_list):
             yield iostat_tuple(**data)
 
 iostat_pipe = Pipeline()
-iostat_pipe.add_item( pipa.system.item.ReadFromFile, start_from_line=107814 )
-iostat_pipe.add_item( pipa.util.item.Memory, fields_names='line_num' )
-iostat_pipe.add_item( make_items_from_iostat )
+iostat_pipe.append( pipa.system.item.ReadFromFile, start_from_line=107814 )
+iostat_pipe.append( pipa.util.item.Memory, fields_names='line_num' )
+iostat_pipe.append( make_items_from_iostat )
 
 
 #--------prstat
@@ -162,9 +162,9 @@ def make_items_from_prstat(input_list):
         except IndexError as e:
             print "Exeception: ", e
 prstat_pipe = Pipeline()
-prstat_pipe.add_item( pipa.system.item.ReadFromFile)
-prstat_pipe.add_item( pipa.util.item.Memory, fields_names='line_num' )
-prstat_pipe.add_item( make_items_from_prstat )
+prstat_pipe.append( pipa.system.item.ReadFromFile)
+prstat_pipe.append( pipa.util.item.Memory, fields_names='line_num' )
+prstat_pipe.append( make_items_from_prstat )
 
 #--------prstat_thread
 def make_items_from_prstat_thread(input_list):
@@ -210,9 +210,9 @@ def make_items_from_prstat_thread(input_list):
             print e
 
 prstat_thread_pipe = Pipeline()
-prstat_thread_pipe.add_item( pipa.system.item.ReadFromFile)
-prstat_thread_pipe.add_item( pipa.util.item.Memory, fields_names='line_num' )
-prstat_thread_pipe.add_item( make_items_from_prstat_thread )
+prstat_thread_pipe.append( pipa.system.item.ReadFromFile)
+prstat_thread_pipe.append( pipa.util.item.Memory, fields_names='line_num' )
+prstat_thread_pipe.append( make_items_from_prstat_thread )
 
 def print_arg(*args, **kwargs):
     print kwargs
@@ -246,9 +246,9 @@ def make_items_from_dspool(input_list):
 
 
 dspool_pipe = Pipeline()
-dspool_pipe.add_item( pipa.system.item.ReadFromFile)
-dspool_pipe.add_item( pipa.util.item.Memory, fields_names='line_num' )
-dspool_pipe.add_item( make_items_from_dspool)
+dspool_pipe.append( pipa.system.item.ReadFromFile)
+dspool_pipe.append( pipa.util.item.Memory, fields_names='line_num' )
+dspool_pipe.append( make_items_from_dspool)
 
 #--------session parser
 def make_key_value_from_session(lines):
@@ -282,10 +282,10 @@ def make_key_value_from_session(lines):
             yield key, value
             
 session_parser_pipe = Pipeline()
-session_parser_pipe.add_item( pipa.system.find_in_path )
-session_parser_pipe.add_item( pipa.system.open_files )
-session_parser_pipe.add_item( pipa.system.read_from_files )
-session_parser_pipe.add_item( make_key_value_from_session )
+session_parser_pipe.append( pipa.system.find_in_path )
+session_parser_pipe.append( pipa.system.open_files )
+session_parser_pipe.append( pipa.system.read_from_files )
+session_parser_pipe.append( make_key_value_from_session )
 
 #--------jvm uptime
 def parse_jvm_uptime(lines):
@@ -297,10 +297,10 @@ def parse_jvm_uptime(lines):
         yield key, value
 
 jvm_uptime_pipe = Pipeline()
-jvm_uptime_pipe.add_item( pipa.system.find_in_path )
-jvm_uptime_pipe.add_item( pipa.system.open_files )
-jvm_uptime_pipe.add_item( pipa.system.read_from_files )
-jvm_uptime_pipe.add_item( parse_jvm_uptime )
+jvm_uptime_pipe.append( pipa.system.find_in_path )
+jvm_uptime_pipe.append( pipa.system.open_files )
+jvm_uptime_pipe.append( pipa.system.read_from_files )
+jvm_uptime_pipe.append( parse_jvm_uptime )
 
 
 

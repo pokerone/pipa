@@ -45,7 +45,7 @@ class ReadFromFile(PipelineItem):
                             if line_tell == next_line_tell:
                                 break
                             line_num += 1
-                            item =  self.make_item( line=line, tell=line_tell, line_num=line_num, filename=f )
+                            item =  self.make_tuple( line=line, tell=line_tell, line_num=line_num, filename=f )
                             yield item
                         except UnicodeDecodeError as e:
                             print e
